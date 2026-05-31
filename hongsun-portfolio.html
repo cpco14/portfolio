@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>홍선이 부자 프로젝트</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07090d;--sur:#0d1117;--sur2:#161b22;--sur3:#1c2330;--bor:#21262d;--up:#3fb950;--dn:#f85149;--tx:#e6edf3;--mt:#7d8590;--kr:#f0883e;--us:#58a6ff;--gd:#d29922}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Noto Sans KR',sans-serif;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(88,166,255,0.06),transparent),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(240,136,62,0.04),transparent);pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:1050px;margin:0 auto;padding:0 16px 60px}
+header{padding:32px 0 24px;border-bottom:1px solid var(--bor);margin-bottom:24px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px}
+.logo .a{color:var(--kr)}.logo .b{color:var(--us)}
+.sub{font-size:11px;color:var(--mt);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+.rbtn{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--kr),var(--us));border:none;border-radius:10px;cursor:pointer;color:#000;font-weight:700;font-size:14px;padding:12px 24px;font-family:'Noto Sans KR',sans-serif;letter-spacing:1px;transition:opacity .2s,transform .1s;white-space:nowrap}
+.rbtn:hover{opacity:.88;transform:translateY(-1px)}
+.rbtn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.pbar{display:none;background:var(--sur);border:1px solid var(--bor);border-radius:10px;padding:16px 20px;margin-bottom:20px}
+.pbar.on{display:block}
+.plbl{font-size:13px;color:var(--us);margin-bottom:8px}
+.ptr{background:var(--sur2);border-radius:4px;height:5px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,var(--kr),var(--us));border-radius:4px;transition:width .4s ease;width:0%}
+.pd{font-size:11px;color:var(--mt);margin-top:6px}
+.lu{font-size:11px;color:var(--mt);margin-bottom:14px}
+.lu span{color:var(--us)}
+.sumrow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.sc{background:var(--sur);border:1px solid var(--bor);border-radius:12px;padding:14px 16px}
+.sl{font-size:10px;color:var(--mt);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.sv{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;color:var(--tx)}
+.ss{font-size:11px;font-family:'JetBrains Mono',monospace;margin-top:3px}
+.up{color:var(--up)}.dn{color:var(--dn)}.nt{color:var(--mt)}
+.tabrow{display:flex;background:var(--sur);border:1px solid var(--bor);border-radius:12px;padding:4px;width:fit-content;margin-bottom:14px}
+.tbtn{background:none;border:none;border-radius:8px;cursor:pointer;padding:8px 20px;font-size:13px;font-weight:500;color:var(--mt);transition:all .15s;font-family:'Noto Sans KR',sans-serif}
+.tbtn.akr{background:rgba(240,136,62,.15);color:var(--kr)}
+.tbtn.aus{background:rgba(88,166,255,.15);color:var(--us)}
+.srow{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.slb{font-size:11px;color:var(--mt)}
+.sbtn{background:none;border:1px solid var(--bor);border-radius:6px;padding:5px 12px;font-size:11px;color:var(--mt);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s}
+.sbtn.on{border-color:var(--gd);color:var(--gd);background:rgba(210,153,34,.08)}
+.shdr{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.spill{font-size:10px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:20px}
+.spill.kr{background:rgba(240,136,62,.15);color:var(--kr);border:1px solid rgba(240,136,62,.25)}
+.spill.us{background:rgba(88,166,255,.15);color:var(--us);border:1px solid rgba(88,166,255,.25)}
+.stot{margin-left:auto;font-size:13px;color:var(--mt);font-family:'JetBrains Mono',monospace}
+.tw{overflow-x:auto;margin-bottom:32px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{padding:9px 12px;text-align:right;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt);font-weight:500;border-bottom:1px solid var(--bor);white-space:nowrap}
+thead th:first-child{text-align:left}
+tbody tr{border-bottom:1px solid var(--bor);transition:background .1s}
+tbody tr:hover{background:var(--sur2)}
+tbody td{padding:11px 12px;text-align:right;white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:12px}
+tbody td:first-child{text-align:left;font-family:'Noto Sans KR',sans-serif}
+.sn{font-size:13px;color:var(--tx);display:flex;align-items:center;gap:7px}
+.etag{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;background:var(--sur3);color:var(--mt);border:1px solid var(--bor)}
+.ap{font-size:10px;color:var(--mt);margin-top:2px;opacity:.7}
+.rk{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:600;background:var(--sur3);color:var(--mt);font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.rk.g{background:rgba(210,153,34,.2);color:var(--gd)}
+.rk.s{background:rgba(125,133,144,.15);color:#c9d1d9}
+.rk.b{background:rgba(188,128,96,.15);color:#bc8060}
+.lc{color:var(--mt);font-size:11px;font-family:'Noto Sans KR',sans-serif}
+.err{color:var(--dn);font-size:11px}
+.panel{display:none}.panel.on{display:block}
+@media(max-width:600px){.sumrow{grid-template-columns:repeat(2,1fr)}.sv{font-size:13px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="logo"><span class="a">홍선이</span> <span class="b">부자</span> 프로젝트</div>
+      <div class="sub">3개 앱 통합 포트폴리오 · 실시간 주가</div>
+    </div>
+    <button class="rbtn" id="rbtn" onclick="refreshAll()">🔄 실시간 주가 업데이트</button>
+  </header>
+
+  <div class="pbar" id="pbar">
+    <div class="plbl" id="plbl">조회 중...</div>
+    <div class="ptr"><div class="pf" id="pf"></div></div>
+    <div class="pd" id="pd"></div>
+  </div>
+
+  <div class="lu" id="lu">마지막 업데이트: <span>— 버튼을 눌러주세요</span></div>
+
+  <div class="sumrow">
+    <div class="sc"><div class="sl">총 평가금액</div><div class="sv" id="s0">—</div><div class="ss nt" id="s0p">—</div></div>
+    <div class="sc"><div class="sl" style="color:var(--kr)">🇰🇷 국내주식</div><div class="sv" id="s1">—</div><div class="ss nt" id="s1p">—</div></div>
+    <div class="sc"><div class="sl" style="color:var(--us)">🇺🇸 해외주식</div><div class="sv" id="s2">—</div><div class="ss nt" id="s2p">—</div></div>
+    <div class="sc"><div class="sl">종목 수</div><div class="sv">35개</div><div class="ss nt">국내 16 · 해외 19</div></div>
+  </div>
+
+  <div class="tabrow">
+    <button class="tbtn akr" id="tkr" onclick="sw('kr')">🇰🇷 국내주식</button>
+    <button class="tbtn" id="tus" onclick="sw('us')">🇺🇸 해외주식</button>
+  </div>
+  <div class="srow">
+    <span class="slb">정렬</span>
+    <button class="sbtn on" id="sr" onclick="ss2('r')">수익률순</button>
+    <button class="sbtn" id="sv2" onclick="ss2('v')">평가금액순</button>
+  </div>
+
+  <div class="panel on" id="pkr">
+    <div class="shdr"><div class="spill kr">국내주식 KRX</div><div class="stot" id="krtot"></div></div>
+    <div class="tw"><table>
+      <thead><tr><th style="text-align:left"># 종목명</th><th>평균단가</th><th>현재가</th><th>수량</th><th>평가금액</th><th>평가손익</th><th>수익률</th></tr></thead>
+      <tbody id="krbody"></tbody>
+    </table></div>
+  </div>
+
+  <div class="panel" id="pus">
+    <div class="shdr"><div class="spill us">해외주식 US</div><div class="stot" id="ustot"></div></div>
+    <div class="tw"><table>
+      <thead><tr><th style="text-align:left"># 종목명</th><th>평균단가</th><th>현재가</th><th>수량</th><th>평가금액</th><th>평가손익</th><th>수익률</th></tr></thead>
+      <tbody id="usbody"></tbody>
+    </table></div>
+  </div>
+</div>
+
+<script>
+// ── 국내 종목: Yahoo Finance .KS 티커 (확인된 정확한 코드) ────
+const KR = [
+  // ✅ 야후 파이낸스에서 직접 확인된 티커만 사용
+  // SOL AI반도체TOP2플러스: 신한 SOL, 야후에 없으면 null 처리
+  {n:'SOL AI반도체TOP2플러스',               t:'453810.KS', etf:1, avg:20491,  qty:140, app:'토스증권'},
+  {n:'RISE 현대차고정피지컬AI',              t:'509260.KS', etf:1, avg:12615,  qty:142, app:'토스증권'},
+  {n:'현대차',                                t:'005380.KS', etf:0, avg:634312, qty:10,  app:'토스증권'},
+  {n:'TIGER 미국우주테크 (토스)',             t:'0183J0.KS', etf:1, avg:17138,  qty:19,  app:'토스증권'},
+  {n:'TIGER 차이나휴머노이드로봇',           t:'0053L0.KS', etf:1, avg:13927,  qty:70,  app:'토스증권'},
+  {n:'TIGER 미국우주테크 (ISA)',              t:'0183J0.KS', etf:1, avg:14013,  qty:8,   app:'신한투자증권'},
+  {n:'TIGER 미국우주테크 (CMA)',              t:'0183J0.KS', etf:1, avg:17090,  qty:5,   app:'신한투자증권'},
+  {n:'KODEX 미국나스닥100',                   t:'379800.KS', etf:1, avg:24821,  qty:16,  app:'신한투자증권'},
+  {n:'KODEX 미국S&P500',                      t:'379810.KS', etf:1, avg:23004,  qty:31,  app:'신한투자증권'},
+  {n:'KODEX 고배당주',                        t:'279530.KS', etf:1, avg:16434,  qty:30,  app:'신한투자증권'},
+  {n:'TIGER 미국배당다우존스스타겟커버드콜2호', t:'481040.KS', etf:1, avg:11002, qty:44, app:'신한투자증권'},
+  {n:'TIGER 미국배당다우존스',                t:'458730.KS', etf:1, avg:14375,  qty:62,  app:'신한투자증권'},
+  {n:'RISE 현대차고정피지컬AI (티레이더)',   t:'509260.KS', etf:1, avg:12615,  qty:144, app:'유안타 티레이더'},
+  {n:'KODEX AI반도체TOP2플러스',             t:'455880.KS', etf:1, avg:43967,  qty:45,  app:'유안타 티레이더'},
+  {n:'KODEX AI전력핵심설비',                  t:'487240.KS', etf:1, avg:53757,  qty:36,  app:'유안타 티레이더'},
+  {n:'KODEX 미국AI전력핵심인프라',           t:'487230.KS', etf:1, avg:26198,  qty:41,  app:'유안타 티레이더'},
+];
+
+// ── 해외 종목: Yahoo Finance 티커 ─────────────────────────────
+const US = [
+  {n:'QLD',                    t:'QLD',   etf:1, avg:82182,  qty:78.27, app:'토스증권',      usd:0},
+  {n:'AMD',                    t:'AMD',   etf:0, avg:714036, qty:5,     app:'토스증권',      usd:0},
+  {n:'SOXX',                   t:'SOXX',  etf:1, avg:705992, qty:3.06,  app:'토스증권',      usd:0},
+  {n:'DRAM',                   t:'DRAM',  etf:1, avg:83624,  qty:17.04, app:'토스증권',      usd:0},
+  {n:'JEPQ',                   t:'JEPQ',  etf:1, avg:85397,  qty:32.28, app:'토스증권',      usd:0},
+  {n:'SCHD',                   t:'SCHD',  etf:1, avg:42912,  qty:41.40, app:'토스증권',      usd:0},
+  {n:'리얼티인컴 (O)',          t:'O',     etf:0, avg:87594,  qty:12.22, app:'토스증권',      usd:0},
+  {n:'JEPI',                   t:'JEPI',  etf:1, avg:84418,  qty:42.55, app:'토스증권',      usd:0},
+  {n:'GLD',                    t:'GLD',   etf:1, avg:670856, qty:2.31,  app:'토스증권',      usd:0},
+  {n:'NASA',                   t:'NASA',  etf:1, avg:63908,  qty:1,     app:'토스증권',      usd:0},
+  {n:'NVDY (토스)',              t:'NVDY',  etf:1, avg:20495,  qty:11.74, app:'토스증권',      usd:0},
+  {n:'엔비디아 (토스)',          t:'NVDA',  etf:0, avg:325677, qty:1,     app:'토스증권',      usd:0},
+  {n:'데스티니테크100 (DXYZ)',  t:'DXYZ',  etf:0, avg:93788,  qty:2,     app:'토스증권',      usd:0},
+  {n:'엔비디아 (유안타)',        t:'NVDA',  etf:0, avg:38.341, qty:54,    app:'유안타 티레이더', usd:1},
+  {n:'알파벳 A (GOOGL)',         t:'GOOGL', etf:0, avg:360.095,qty:2,    app:'유안타 티레이더', usd:1},
+  {n:'알파벳 C (GOOG)',          t:'GOOG',  etf:0, avg:385.24, qty:1,    app:'유안타 티레이더', usd:1},
+  {n:'허큘리스캐피털 (HTGC)',   t:'HTGC',  etf:0, avg:15.709, qty:21,   app:'유안타 티레이더', usd:1},
+  {n:'메인스트리트캐피털 (MAIN)',t:'MAIN',  etf:0, avg:51.555, qty:6,    app:'유안타 티레이더', usd:1},
+  {n:'NVDY (유안타)',             t:'NVDY',  etf:1, avg:14.034, qty:18,   app:'유안타 티레이더', usd:1},
+];
+
+let fx = 1380, tab = 'kr', srt = 'r';
+const fw = n => Math.round(n).toLocaleString('ko-KR');
+const sc = v => v > 0 ? 'up' : v < 0 ? 'dn' : 'nt';
+const sp = v => v > 0 ? '+' : '';
+const rk = i => i===0?'g':i===1?'s':i===2?'b':'';
+const sorted = arr => [...arr].sort((a,b) => srt==='r' ? (b.ret||0)-(a.ret||0) : (b.val||0)-(a.val||0));
+
+function prog(p,l,d){ document.getElementById('pf').style.width=p+'%'; document.getElementById('plbl').textContent=l; document.getElementById('pd').textContent=d||''; }
+
+// ── Yahoo Finance CORS 프록시 조회 ───────────────────────────
+async function yahooFetch(ticker) {
+  const yUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1d`;
+  // 1차: 직접 (github pages에선 될 때도 있음)
+  try {
+    const r = await fetch(yUrl, {signal:AbortSignal.timeout(5000)});
+    const d = await r.json();
+    const p = d?.chart?.result?.[0]?.meta?.regularMarketPrice;
+    if (p) return p;
+  } catch(e) {}
+  // 2차: allorigins 프록시
+  try {
+    const r = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(yUrl)}`, {signal:AbortSignal.timeout(8000)});
+    const j = await r.json();
+    const d = JSON.parse(j.contents);
+    const p = d?.chart?.result?.[0]?.meta?.regularMarketPrice;
+    if (p) return p;
+  } catch(e) {}
+  // 3차: corsproxy.io
+  try {
+    const r = await fetch(`https://corsproxy.io/?${encodeURIComponent(yUrl)}`, {signal:AbortSignal.timeout(8000)});
+    const d = await r.json();
+    const p = d?.chart?.result?.[0]?.meta?.regularMarketPrice;
+    if (p) return p;
+  } catch(e) {}
+  return null;
+}
+
+async function fetchKR(ticker) { return yahooFetch(ticker); }
+async function fetchUS(ticker) { return yahooFetch(ticker); }
+
+// ── 환율 조회 ─────────────────────────────────────────────────
+async function fetchFX() {
+  const p = await yahooFetch('USDKRW=X');
+  if (p && p > 900) return p;
+  try {
+    const r = await fetch('https://open.er-api.com/v6/latest/USD', {signal:AbortSignal.timeout(5000)});
+    const d = await r.json();
+    return d.rates.KRW;
+  } catch(e) {}
+  return null;
+}
+
+// ── 메인 업데이트 ─────────────────────────────────────────────
+async function refreshAll() {
+  const btn = document.getElementById('rbtn');
+  btn.disabled = true;
+  document.getElementById('pbar').classList.add('on');
+  prog(3, '💱 환율 조회 중...', 'USD/KRW');
+
+  const rate = await fetchFX();
+  if (rate && rate > 900) fx = rate;
+  prog(8, '📡 국내+해외 주가 병렬 조회 중...', `국내 ${KR.length}종목 · 해외 ${US.length}종목`);
+
+  const total = KR.length + US.length;
+  let done = 0;
+  const tick = () => { done++; prog(8 + Math.round(done/total*87), `조회 중... (${done}/${total})`, '네이버금융(국내) + Yahoo Finance(해외)'); };
+
+  // 국내·해외 동시 병렬
+  const [krPrices, usPrices] = await Promise.all([
+    Promise.all(KR.map(s => fetchKR(s.t).then(v => { tick(); return v; }))),
+    Promise.all(US.map(s => fetchUS(s.t).then(v => { tick(); return v; })))
+  ]);
+
+  // 국내 반영
+  KR.forEach((s, i) => {
+    const p = krPrices[i];
+    if (p) { s.cur = p; s.val = p*s.qty; s.profit = s.val - s.avg*s.qty; s.ret = s.profit/(s.avg*s.qty)*100; }
+    else { delete s.cur; delete s.val; delete s.profit; delete s.ret; }
+  });
+
+  // 해외 반영
+  US.forEach((s, i) => {
+    const p = usPrices[i];
+    if (p) {
+      if (s.usd) { s.curD=p; s.curW=p; s.val=p*s.qty*fx; s.profit=s.val-s.avg*s.qty*fx; s.ret=s.profit/(s.avg*s.qty*fx)*100; }
+      else { s.curW=p*fx; s.val=s.curW*s.qty; s.profit=s.val-s.avg*s.qty; s.ret=s.profit/(s.avg*s.qty)*100; }
+    }
+  });
+
+  prog(100, '✅ 완료!');
+  const now = new Date();
+  document.getElementById('lu').innerHTML = `마지막 업데이트: <span>${now.toLocaleTimeString('ko-KR')}</span> · USD/KRW ₩${fw(fx)}`;
+  await new Promise(r => setTimeout(r, 500));
+  document.getElementById('pbar').classList.remove('on');
+  btn.disabled = false;
+  renderAll();
+}
+
+function renderAll() {
+  const kt=KR.reduce((s,x)=>s+(x.val||0),0), kp=KR.reduce((s,x)=>s+(x.profit||0),0);
+  const ut=US.reduce((s,x)=>s+(x.val||0),0), up=US.reduce((s,x)=>s+(x.profit||0),0);
+  const g=kt+ut, gp=kp+up, gpc=(g-gp)>0?gp/(g-gp)*100:0;
+  const set=(id,v)=>document.getElementById(id).textContent=v;
+  const setC=(id,v)=>{document.getElementById(id).className='ss '+(v>0?'up':v<0?'dn':'nt');};
+  if(g){set('s0','₩'+fw(g));setC('s0p',gp);set('s0p',sp(gp)+'₩'+fw(Math.abs(gp))+' ('+sp(gpc)+gpc.toFixed(1)+'%)');}
+  if(kt){set('s1','₩'+fw(kt));setC('s1p',kp);set('s1p',sp(kp)+'₩'+fw(Math.abs(kp)));}
+  if(ut){set('s2','₩'+fw(ut));setC('s2p',up);set('s2p',sp(up)+'₩'+fw(Math.abs(up)));}
+  renderKR(); renderUS();
+}
+
+function renderKR() {
+  const data = sorted(KR);
+  const tot = data.reduce((s,x)=>s+(x.val||0),0);
+  document.getElementById('krtot').textContent = tot ? '평가 ₩'+fw(tot) : '';
+  document.getElementById('krbody').innerHTML = data.map((s,i) => {
+    const hp = s.cur != null;
+    return `<tr>
+      <td><div class="sn"><span class="rk ${rk(i)}">${i+1}</span>${s.n}${s.etf?'<span class="etag">ETF</span>':''}</div><div class="ap">${s.app}</div></td>
+      <td>₩${fw(s.avg)}</td>
+      <td class="${hp?'':'lc'}">${hp?'₩'+fw(s.cur):'조회 전'}</td>
+      <td>${s.qty}주</td>
+      <td>${s.val?'₩'+fw(s.val):'—'}</td>
+      <td class="${sc(s.profit)}">${s.profit!=null?sp(s.profit)+'₩'+fw(Math.abs(s.profit)):'—'}</td>
+      <td class="${sc(s.ret)}" style="font-weight:700">${s.ret!=null?sp(s.ret)+s.ret.toFixed(2)+'%':'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderUS() {
+  const data = sorted(US);
+  const tot = data.reduce((s,x)=>s+(x.val||0),0);
+  document.getElementById('ustot').textContent = tot ? '평가 ₩'+fw(tot) : '';
+  document.getElementById('usbody').innerHTML = data.map((s,i) => {
+    const hp = s.curW != null;
+    const ad = s.usd ? '$'+s.avg.toFixed(3) : '₩'+fw(s.avg);
+    const cd = hp ? (s.usd ? '$'+s.curD.toFixed(2)+' (₩'+fw(s.curD*fx)+')' : '₩'+fw(Math.round(s.curW))) : '조회 전';
+    return `<tr>
+      <td><div class="sn"><span class="rk ${rk(i)}">${i+1}</span>${s.n}${s.etf?'<span class="etag">ETF</span>':''}</div><div class="ap">${s.app}</div></td>
+      <td>${ad}</td>
+      <td class="${hp?'':'lc'}">${cd}</td>
+      <td>${s.qty}주</td>
+      <td>${s.val?'₩'+fw(s.val):'—'}</td>
+      <td class="${sc(s.profit)}">${s.profit!=null?sp(s.profit)+'₩'+fw(Math.abs(s.profit)):'—'}</td>
+      <td class="${sc(s.ret)}" style="font-weight:700">${s.ret!=null?sp(s.ret)+s.ret.toFixed(2)+'%':'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function sw(t) {
+  tab=t;
+  ['kr','us'].forEach(x=>{document.getElementById('t'+x).className='tbtn'+(t===x?' a'+x:'');document.getElementById('p'+x).className='panel'+(t===x?' on':'');});
+}
+function ss2(s) {
+  srt=s;
+  document.getElementById('sr').className='sbtn'+(s==='r'?' on':'');
+  document.getElementById('sv2').className='sbtn'+(s==='v'?' on':'');
+  renderKR(); renderUS();
+}
+renderAll();
+</script>
+</body>
+</html>
